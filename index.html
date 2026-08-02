@@ -4,24 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>yornn | Сокровищница</title>
-    <!-- Подключаем наш один общий файл со стилями -->
-    <link rel="stylesheet" href="style.css">
+    <!-- Общие стили + стили главной страницы -->
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
 
-    <nav class="nav-menu">
-        <a href="index.html" class="btn">главная</a>
-        <a href="images.html" class="btn">генерация картинок</a>
-        <a href="styles.html" class="btn">стили</a>
-        <a href="outfits.html" class="btn">наряды</a>
-        <a href="notes.html" class="btn">заметки</a>
-    </nav>
-
     <main class="content">
         <h1 class="profile-title">Личная сокровищница</h1>
-        <h2 class="profile-title">Йорн Крысолов🪓</h2>
-        <p class="profile-subtitle">пока что все, что находится во вкладке промпты и стили - пизженное, сурсы будут указаны</p>
+        <h2 class="profile-title">Йорн Крысолов</h2>
+
+        <nav class="nav-menu">
+            <a href="index.html" class="btn">главная</a>
+            <a href="images.html" class="btn">генерация картинок</a>
+            <a href="styles.html" class="btn">стили</a>
+            <a href="outfits.html" class="btn">наряды</a>
+            <a href="notes.html" class="btn">заметки</a>
+        </nav>
     </main>
+
+    <!-- Плавные переходы между страницами -->
+    <script src="js/page-transition.js"></script>
 
 </body>
 </html>

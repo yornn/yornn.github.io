@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>yornn | Стили</title>
+    <!-- Общие стили + стили страницы стилей -->
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <!-- Шапка с кнопками -->
+    <nav class="nav-menu">
+        <a href="index.html" class="btn">главная</a>
+        <a href="images.html" class="btn">генерация картинок</a>
+        <a href="styles.html" class="btn">стили</a>
+        <a href="outfits.html" class="btn">наряды</a>
+        <a href="notes.html" class="btn">заметки</a>
+    </nav>
+
+    <!-- Содержимое страницы -->
+    <main class="content">
+        <h1 class="profile-title">Стили</h1>
+        <p class="profile-subtitle">Склад всевозможных стилей для генерации</p>
+
+        <!-- Ряд блоков стилей (горизонтально) -->
+        <div class="styles-row">
+
+        <!-- Блок стиля: клик по картинке раскрывает текст и кнопку -->
+        <section class="style-block">
+            <!-- Картинка стиля (кликабельна) -->
+            <div class="style-image" role="button" tabindex="0" title="нажми, чтобы раскрыть">
+                <img src="img-source/iig_2026-08-02T14-13-56-425Z.jpg" alt="стиль">
+                <button class="expand-btn" type="button" title="на весь экран">⤢</button>
+            </div>
+
+            <!-- Скрытая часть: текст и кнопки -->
+            <div class="style-details">
+                <!-- Плашка: основной промпт -->
+                <span class="style-label">промпт</span>
+                <textarea class="style-text" rows="8" readonly>Semi-realistic digital painting, WLOP inspired. Idealized but believable faces — smooth rendering, luminous skin, slightly softened features without cartoonish exaggeration. Painterly loose brushwork on background, tighter detail on faces and hands. Natural balanced color palette — neutral skin tones with healthy warmth, no color cast. Gentle shadows with natural color, not tinted blue or green. Skin reads as alive — subtle pinks on cheeks, ears, nose, knuckles. Muted but not desaturated. Shallow depth of field, intimate quiet mood.</textarea>
+                <button class="btn copy-btn" type="button">копировать</button>
+
+                <!-- Плашка: негатив -->
+                <span class="style-label">негатив</span>
+                <textarea class="style-text" rows="6" readonly>Avoid: stubble, beard, exaggerated expressions, uncanny valley, anime eyes, chibi proportions, cel shading, cartoon features, extra fingers, missing fingers, fused fingers, deformed hands, twisted limbs, dislocated joints, impossible pose, floating limbs, bad anatomy, watermark, text, blurry</textarea>
+                <button class="btn copy-btn" type="button">копировать</button>
+            </div>
+        </section>
+
+        <!-- Второй блок стиля -->
+        <section class="style-block">
+            <!-- Картинка стиля (кликабельна) -->
+            <div class="style-image" role="button" tabindex="0" title="нажми, чтобы раскрыть">
+                <img src="img-source/iig_2026-08-01T19-29-15-940Z.jpg" alt="стиль">
+                <button class="expand-btn" type="button" title="на весь экран">⤢</button>
+            </div>
+
+            <!-- Скрытая часть: текст и кнопки -->
+            <div class="style-details">
+                <!-- Плашка: основной промпт -->
+                <span class="style-label">промпт</span>
+                <textarea class="style-text" rows="7" readonly>Character concept art sketch, rough traditional media look. Thick, unrefined pencil outlines. Painterly marker coloring with visible brush strokes on clothing and skin. Matte skin texture, soft dry blush. Desaturated atmospheric colors. Minimal highlights. Avoid: high gloss, wet skin, 3D CGI, luminous shading, hyperrealism, clean anime vectors.</textarea>
+                <button class="btn copy-btn" type="button">копировать</button>
+            </div>
+        </section>
+
+        <!-- Третий блок стиля -->
+        <section class="style-block">
+            <!-- Картинка стиля (кликабельна) -->
+            <div class="style-image" role="button" tabindex="0" title="нажми, чтобы раскрыть">
+                <img src="img-source/iig_2026-06-19T21-14-06-770Z.png" alt="стиль">
+                <button class="expand-btn" type="button" title="на весь экран">⤢</button>
+            </div>
+
+            <!-- Скрытая часть: текст и кнопки -->
+            <div class="style-details">
+                <!-- Плашка: основной промпт -->
+                <span class="style-label">промпт</span>
+                <textarea class="style-text" rows="6" readonly>Semi-realistic digital painting, WLOP inspired. Natural balanced color palette — neutral skin tones with healthy warmth, no color cast. Gentle shadows with natural color, not tinted blue or green. Anatomically correct hands and proportions. Match the rendering technique, line quality, texture, and ornamental details from the reference image.</textarea>
+                <button class="btn copy-btn" type="button">копировать</button>
+
+                <!-- Плашка: негатив -->
+                <span class="style-label">негатив</span>
+                <textarea class="style-text" rows="3" readonly>Avoid: stubble, beard, exaggerated expressions, uncanny valley, bad anatomy, watermark, text, blurry</textarea>
+                <button class="btn copy-btn" type="button">копировать</button>
+            </div>
+        </section>
+
+        <!-- Четвёртый блок стиля -->
+        <section class="style-block">
+            <!-- Картинка стиля (кликабельна) -->
+            <div class="style-image" role="button" tabindex="0" title="нажми, чтобы раскрыть">
+                <img src="img-source/iig_2026-07-16T21-12-43-912Z.jpg" alt="стиль">
+                <button class="expand-btn" type="button" title="на весь экран">⤢</button>
+            </div>
+
+            <!-- Скрытая часть: текст и кнопки -->
+            <div class="style-details">
+                <!-- Плашка: основной промпт -->
+                <span class="style-label">промпт</span>
+                <textarea class="style-text" rows="5" readonly>Expressive 2D illustration, messy ink line-art, rough painterly brushstrokes, elegant vintage aesthetic. Delicate facial features, healthy feminine figure, unrefined sketchy clothing. Sophisticated party vibe, flat high contrast, full canvas illustration.</textarea>
+                <button class="btn copy-btn" type="button">копировать</button>
+            </div>
+        </section>
+
+        </div>
+    </main>
+
+    <!-- Модальное окно: стиль на весь экран -->
+    <div class="style-modal" id="styleModal">
+        <div class="modal-backdrop"></div>
+        <button class="modal-arrow modal-prev" type="button" title="предыдущий стиль">❮</button>
+        <button class="modal-arrow modal-next" type="button" title="следующий стиль">❯</button>
+        <div class="modal-content">
+            <button class="modal-close" type="button" title="закрыть">✕</button>
+            <div class="modal-image-wrap">
+                <img class="modal-image" src="" alt="стиль">
+            </div>
+            <div class="modal-text-wrap">
+                <textarea class="style-text modal-text" rows="5" readonly></textarea>
+                <button class="btn copy-btn modal-copy" type="button">копировать</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Плавные переходы между страницами -->
+    <script src="js/page-transition.js"></script>
+
+    <script>
+        // Раскрытие/скрытие деталей по клику на картинку
+        document.querySelectorAll('.style-image').forEach(function (img) {
+            function toggle() {
+                img.closest('.style-block').classList.toggle('open');
+            }
+            img.addEventListener('click', toggle);
+            img.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggle();
+                }
+            });
+        });
+
+        // Копирование текста из textarea прямо над кнопкой
+        document.querySelectorAll('.copy-btn').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                const text = btn.previousElementSibling.value;
+
+                navigator.clipboard.writeText(text).then(function () {
+                    const oldLabel = btn.textContent;
+                    btn.textContent = 'скопировано ✓';
+                    btn.classList.add('copied');
+                    setTimeout(function () {
+                        btn.textContent = oldLabel;
+                        btn.classList.remove('copied');
+                    }, 1500);
+                });
+            });
+        });
+
+        // Модальное окно: стиль на весь экран
+        const modal = document.getElementById('styleModal');
+        const modalImage = modal.querySelector('.modal-image');
+        const modalText = modal.querySelector('.modal-text');
+        const styleBlocks = Array.from(document.querySelectorAll('.style-block'));
+        let currentIndex = -1;
+
+        function showInModal(block) {
+            const img = block.querySelector('.style-image img');
+            // Берём первый textarea блока (основной промпт)
+            const text = block.querySelector('.style-text');
+
+            modalImage.src = img.src;
+            modalText.value = text ? text.value : '';
+            currentIndex = styleBlocks.indexOf(block);
+        }
+
+        function openModal(block) {
+            showInModal(block);
+            modal.classList.add('open');
+            document.body.classList.add('modal-open');
+        }
+
+        function closeModal() {
+            modal.classList.remove('open');
+            document.body.classList.remove('modal-open');
+        }
+
+        // Переключение между стилями (с зацикливанием)
+        function showNext() {
+            const next = (currentIndex + 1) % styleBlocks.length;
+            showInModal(styleBlocks[next]);
+        }
+
+        function showPrev() {
+            const prev = (currentIndex - 1 + styleBlocks.length) % styleBlocks.length;
+            showInModal(styleBlocks[prev]);
+        }
+
+        modal.querySelector('.modal-next').addEventListener('click', showNext);
+        modal.querySelector('.modal-prev').addEventListener('click', showPrev);
+
+        // Открытие по кнопке ⤢ (не триггеря раскрытие блока)
+        document.querySelectorAll('.expand-btn').forEach(function (btn) {
+            btn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                openModal(btn.closest('.style-block'));
+            });
+        });
+
+        // Закрытие: крестик, клик по фону, Escape
+        modal.querySelector('.modal-close').addEventListener('click', closeModal);
+        modal.querySelector('.modal-backdrop').addEventListener('click', closeModal);
+        document.addEventListener('keydown', function (e) {
+            if (!modal.classList.contains('open')) return;
+            if (e.key === 'Escape') {
+                closeModal();
+            } else if (e.key === 'ArrowRight') {
+                showNext();
+            } else if (e.key === 'ArrowLeft') {
+                showPrev();
+            }
+        });
+    </script>
+
+</body>
+</html>

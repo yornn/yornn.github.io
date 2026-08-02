@@ -1,0 +1,91 @@
+/* Стили главной страницы (index.html) */
+
+/* Фон главной страницы — чистая картинка без фильтров, без прокрутки */
+html {
+    scrollbar-gutter: auto;
+}
+
+body {
+    padding-top: 6vh;
+    background-image: url('../img-source/background.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Заголовки — Norse Bold, крупнее */
+.profile-title {
+    font-family: 'Norse', serif;
+    font-weight: 700;
+    font-size: 3.2rem;
+}
+
+/* Подзаголовок — Norse Regular, крупнее */
+.profile-subtitle {
+    font-size: 1rem;
+    color: #8b949e;
+    line-height: 1.4;
+}
+
+/* Навигация на главной: слева, столбиком, крупно, без рамок */
+.nav-menu {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    max-width: none;
+    gap: 14px;
+    margin-bottom: 40px;
+    margin-top: 8vh; /* отступ от заголовков */
+    margin-left: 6vw; /* пространство между краем и кнопками */
+}
+
+.nav-menu .btn {
+    background: none;
+    border: none;
+    border-radius: 0;
+    padding: 12px 0;
+    font-size: 3.4rem;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    color: #c9d1d9;
+    transition: color 0.2s ease-in-out;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
+}
+
+.nav-menu .btn:hover {
+    background: none;
+    border: none;
+    transform: none;
+    box-shadow: none;
+    color: #f0f6fc;
+}
+
+/* Контент главной — на всю ширину */
+.content {
+    text-align: center;
+    max-width: none;
+}
+
+/* Заголовки идут первыми, строго по центру вверху, с мягкой тенью */
+.profile-title {
+    font-size: 7rem;
+    margin-top: 0;
+    text-align: center;
+    width: 100%;
+    text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.85);
+}
+
+/* Второй заголовок — поменьше, тоже по центру, с тенью */
+h2.profile-title {
+    font-size: 3rem;
+    margin-bottom: 0;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.85);
+}
+
+.profile-subtitle {
+    font-size: 1.4rem;
+    text-align: center;
+}

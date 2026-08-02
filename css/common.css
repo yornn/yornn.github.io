@@ -1,5 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Kurale&display=swap');
 
+/* Локальные шрифты */
+@font-face {
+    font-family: 'Norse';
+    src: url('../fonts/Norse-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Norse';
+    src: url('../fonts/Norse-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -13,8 +28,33 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 100vh;
     padding: 24px 16px;
+    opacity: 1;
+    transition: opacity 0.25s ease-in-out;
+    animation: page-fade-in 0.3s ease-out;
+}
+
+/* Скроллбар не появляется, если контент не превышает вьюпорт */
+html {
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+}
+
+/* Плавное появление страницы при загрузке */
+@keyframes page-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Плавный уход страницы при переходе по вкладке */
+body.page-leave {
+    opacity: 0;
 }
 
 /* Навигация сверху */
@@ -52,6 +92,15 @@ body {
     border-color: #8b949e;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Кнопки навигации — шрифт Norse Bold, крупнее */
+.nav-menu .btn {
+    font-family: 'Norse', serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    padding: 12px 24px;
+    border-radius: 10px;
 }
 
 .content {
