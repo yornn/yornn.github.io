@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>yornn | Наряды</title>
+    <!-- Стили страницы нарядов -->
+    <link rel="stylesheet" href="css/outfits.css">
+</head>
+<body>
+
+    <!-- Шапка с кнопками -->
+    <nav class="nav-menu">
+        <a href="index.html" class="btn">главная</a>
+        <a href="images.html" class="btn">генерация картинок</a>
+        <a href="styles.html" class="btn">стили</a>
+        <a href="outfits.html" class="btn">наряды</a>
+        <a href="notes.html" class="btn">заметки</a>
+        <a href="hugin.html" class="btn">шепот хугина</a>
+    </nav>
+
+    <!-- Содержимое страницы -->
+    <main class="content">
+        <!-- Сортировка по категориям -->
+        <div class="filter-row">
+            <button class="btn filter-btn active" type="button" data-filter="all">всё</button>
+            <button class="btn filter-btn" type="button" data-filter="medieval">средневековое</button>
+            <button class="btn filter-btn" type="button" data-filter="modern">современное</button>
+        </div>
+
+        <!-- Сетка нарядов: по четыре блока в ряду -->
+        <div class="outfits-row">
+
+        <!-- Наряд 1: картинка сверху, текст под ней (клик = копирование) -->
+        <section class="outfit-block" data-category="medieval" data-tags="средневековье">
+            <div class="outfit-image">
+                <img src="img-source/medieval-1.jpeg" alt="наряд 1">
+            </div>
+
+            <!-- Номер и название наряда в одной строке -->
+            <div class="outfit-head">
+                <span class="outfit-num">#1</span>
+                <span class="outfit-name">Свадебное платье</span>
+            </div>
+
+            <!-- Текст: клик копирует; показывает 3 строки, остальное по кнопке -->
+            <div class="outfit-text" role="button" tabindex="0" title="нажми, чтобы скопировать">A floor-length, structured but flowing ivory woolen dress features a subtle V-neck with delicate gold wire embroidery along the collar. Dramatically wide, belled sleeves open to reveal inner cuffs of intricate, geometric light-gold patterns and fine white lace trim. A matching heavy ivory cloak, fastened at the shoulders with ornate, metallic gold Celtic knot brooches, drapes elegantly over the entire ensemble.</div>
+            <button class="expand-btn" type="button">развернуть</button>
+        </section>
+
+        <!-- Наряд 2 -->
+        <section class="outfit-block" data-category="medieval" data-tags="средневековье">
+            <div class="outfit-image">
+                <img src="img-source/medieval-2.jpeg" alt="наряд 2">
+            </div>
+
+            <!-- Номер и название наряда в одной строке -->
+            <div class="outfit-head">
+                <span class="outfit-num">#2</span>
+                <span class="outfit-name">Туника с поясом</span>
+            </div>
+
+            <!-- Текст: клик копирует; показывает 3 строки, остальное по кнопке -->
+            <div class="outfit-text" role="button" tabindex="0" title="нажми, чтобы скопировать">A dominant, rich deep-red over-tunic with a loose, A-line silhouette. The over-tunic features a prominent, wide, rounded charcoal-grey neck panel that forms a contrasting bib detail, topped with a small, stand-up mandarin-style collar in grey. It has short, flared, three-quarter length sleeves that are finished with a matching broad charcoal-grey band. Cinching the waist is a slim, dark-brown leather-textured belt tied in a simple, decorative knot with a long, flowing tail. The hem of the deep-red over-tunic is calf-length (midi) and is also edged with a broad charcoal-grey band. Layered beneath is a full-length, cool-grey tunic, with form-fitting long sleeves extending to the wrists and a full, flowing ankle-length skirt that extends below the red over-tunic hem. The outfit is completed by ankle-length, rustic dark brown leather boots. they feature a multiple-wrap of a thin tan leather cord secured around the ankle and lower shaft</div>
+            <button class="expand-btn" type="button">развернуть</button>
+        </section>
+
+        <!-- Наряд 3 -->
+        <section class="outfit-block" data-category="medieval" data-tags="средневековье">
+            <div class="outfit-image">
+                <img src="img-source/medieval-3.png" alt="наряд 3">
+            </div>
+
+            <!-- Номер и название наряда в одной строке -->
+            <div class="outfit-head">
+                <span class="outfit-num">#3</span>
+                <span class="outfit-name">Туника с жилетом</span>
+            </div>
+
+            <!-- Текст: клик копирует; показывает 3 строки, остальное по кнопке -->
+            <div class="outfit-text" role="button" tabindex="0" title="нажми, чтобы скопировать">features a light grey long-sleeved tunic adorned with dark patterned embroidery on the V-neckline and upper arms, layered with a dark brown fitted vest fastened by an ornamental closure. The outfit is completed by a long, gathered navy blue skirt and a pair of sturdy. The outfit is completed by ankle-length, rustic dark brown leather boots. they feature a multiple-wrap of a thin tan leather cord secured around the ankle and lower shaft</div>
+            <button class="expand-btn" type="button">развернуть</button>
+        </section>
+
+        <!-- Наряд 4 -->
+        <section class="outfit-block" data-category="medieval" data-tags="средневековье">
+            <div class="outfit-image">
+                <img src="img-source/medieval-4.jpeg" alt="наряд 4">
+            </div>
+
+            <!-- Номер и название наряда в одной строке -->
+            <div class="outfit-head">
+                <span class="outfit-num">#4</span>
+                <span class="outfit-name">Сарафан</span>
+            </div>
+
+            <!-- Текст: клик копирует; показывает 3 строки, остальное по кнопке -->
+            <div class="outfit-text" role="button" tabindex="0" title="нажми, чтобы скопировать">This traditional folk-inspired outfit consists of a floor-length slate-blue sarafan layered over an off-white blouse with voluminous, billowy sleeves. The pinafore-style dress features a square neckline, a fitted high waist, and an A-line skirt decorated with intricate light-colored embroidery running down the center front, waistband, and shoulder straps. The underlying chemise has delicate gathering at the collar and fitted wrist cuffs accented with subtle red detailing, giving the overall ensemble an elegant historical character.</div>
+            <button class="expand-btn" type="button">развернуть</button>
+        </section>
+
+        <!-- Наряд 5 -->
+        <section class="outfit-block" data-category="medieval" data-tags="средневековье">
+            <div class="outfit-image">
+                <img src="img-source/medieval-5.jpeg" alt="наряд 5">
+            </div>
+
+            <!-- Номер и название наряда в одной строке -->
+            <div class="outfit-head">
+                <span class="outfit-num">#5</span>
+                <span class="outfit-name">С платком и шалью</span>
+            </div>
+
+            <!-- Текст: клик копирует; показывает 3 строки, остальное по кнопке -->
+            <div class="outfit-text" role="button" tabindex="0" title="нажми, чтобы скопировать">natural linen embroidered kerchief with red geometric edge pattern tied at the neck, faceless mannequin head, large brown plaid woolen shawl with blue and cream checks and fringe draped over shoulders, teal tunic-style high-neck blouse with a central embroidered placket of red and gold thread and matching cuffs, simple metal cross pendant, woven red belt at the waist, floor-length deep violet velvet maxi skirt, ankle-height dark brown soft leather, soft-soled footwear.</div>
+            <button class="expand-btn" type="button">развернуть</button>
+        </section>
+
+        <!-- Наряд 6 -->
+        <section class="outfit-block" data-category="medieval" data-tags="средневековье">
+            <div class="outfit-image">
+                <img src="img-source/medieval-6.jpeg" alt="наряд 6">
+            </div>
+
+            <!-- Номер и название наряда в одной строке -->
+            <div class="outfit-head">
+                <span class="outfit-num">#6</span>
+                <span class="outfit-name">Крестьянское платье</span>
+            </div>
+
+            <!-- Текст: клик копирует; показывает 3 строки, остальное по кнопке -->
+            <div class="outfit-text" role="button" tabindex="0" title="нажми, чтобы скопировать">dark brown long-sleeve linen dress, simple one-piece dress, wide rounded neckline, visible collarbones, natural linen fabric, ankle-length dress, modest loose-fitting silhouette, light beige wrap apron tied at the waist, wide waistband with a large side bow, soft pleated apron, layered hem with the dark brown dress visible underneath, rustic medieval peasant clothing, Scandinavian medieval style, earthy color palette, practical historical attire, loose brown leather ankle boots with wrapped shafts and leather ties, handcrafted rustic footwear</div>
+            <button class="expand-btn" type="button">развернуть</button>
+        </section>
+
+        <!-- Наряд 7 -->
+        <section class="outfit-block" data-category="medieval" data-tags="средневековье">
+            <div class="outfit-image">
+                <img src="img-source/medieval-7.jpeg" alt="наряд 7">
+            </div>
+
+            <div class="outfit-head">
+                <span class="outfit-num">#7</span>
+                <span class="outfit-name">Народное платье</span>
+            </div>
+
+            <div class="outfit-text" role="button" tabindex="0" title="нажми, чтобы скопировать">traditional folk dress, long-sleeved white peasant blouse with puffy sleeves and subtle diamond embroidery, dark brown fitted sleeveless bodice with flared peplum waist and red trim, dark brown pleated maxi skirt featuring a wide band of red geometric embroidery near the hem, layered over a white underskirt. dark brown leather lace-up ankle boots.</div>
+            <button class="expand-btn" type="button">развернуть</button>
+        </section>
+
+        <!-- Наряд 8 -->
+        <section class="outfit-block" data-category="medieval" data-tags="средневековье">
+            <div class="outfit-image">
+                <img src="img-source/medieval-8.jpeg" alt="наряд 8">
+            </div>
+
+            <div class="outfit-head">
+                <span class="outfit-num">#8</span>
+                <span class="outfit-name">Зимнее пальто</span>
+            </div>
+
+            <div class="outfit-text" role="button" tabindex="0" title="нажми, чтобы скопировать">long olive-green winter coat with brown fur trim on the collar, front, cuffs and hem, dark green floor-length underdress, simple brown leather boots</div>
+            <button class="expand-btn" type="button">развернуть</button>
+        </section>
+
+        <!-- Наряд 9 -->
+        <section class="outfit-block" data-category="medieval" data-tags="средневековье">
+            <div class="outfit-image">
+                <img src="img-source/medieval-9.png" alt="наряд 9">
+            </div>
+
+            <div class="outfit-head">
+                <span class="outfit-num">#9</span>
+                <span class="outfit-name">С накидкой</span>
+            </div>
+
+            <div class="outfit-text" role="button" tabindex="0" title="нажми, чтобы скопировать">short brown capelet, rust-orange patterned trim, front criss-cross lacing, brown cord, long muted teal-green maxi dress, rust-orange patterned trim on neckline and hem, long voluminous cream-colored sleeves, rust-orange patterned trim on cuffs, thin brown leather belt, tied waist sash, hanging leather pouch, simple dark brown boots</div>
+            <button class="expand-btn" type="button">развернуть</button>
+        </section>
+
+        <!-- Наряд 10 -->
+        <section class="outfit-block" data-category="medieval" data-tags="средневековье">
+            <div class="outfit-image">
+                <img src="img-source/medieval-10.png" alt="наряд 10">
+            </div>
+
+            <div class="outfit-head">
+                <span class="outfit-num">#10</span>
+                <span class="outfit-name">Царский наряд</span>
+            </div>
+
+            <div class="outfit-text" role="button" tabindex="0" title="нажми, чтобы скопировать">Traditional royal Russian female attire. A floor-length, deep crimson red pleated gown with a wide, intricate panel of heavy gold floral embroidery running down the front center. Long sleeves with matching gold-embroidered cuffs. A thick, luxurious dark brown fur mantle covering the shoulders and chest. Dark gloves. A tall, ornate red Kokoshnik headdress richly decorated with white pearls, gold filigree, and dangling pearl tassels on the sides.</div>
+            <button class="expand-btn" type="button">развернуть</button>
+        </section>
+
+        <!-- Наряд 11 -->
+        <section class="outfit-block" data-category="medieval" data-tags="средневековье">
+            <div class="outfit-image">
+                <img src="img-source/medieval-11.png" alt="наряд 11">
+            </div>
+
+            <div class="outfit-head">
+                <span class="outfit-num">#11</span>
+                <span class="outfit-name">Сарафан со шнуровкой</span>
+            </div>
+
+            <div class="outfit-text" role="button" tabindex="0" title="нажми, чтобы скопировать">The outfit features a dried floral wreath crown made of acorns, twigs, and berries in autumn colors. She wears a long-sleeved, voluminous white-colored linen blouse with large puff sleeves. The blouse has a square neckline trimmed with white lace and a small front-lace bow. Layered over the blouse is a dark blue bodice and skirt (a Sarafan-style dress) with front-lacing and intricate gold botanical motif embroidery. The edges of the bodice and the front hem of the skirt are finished with a decorative brocade trim of gold and red patterns. A broad, burnt sienna satin ribbon is tied around her waist in a bow at the front.</div>
+            <button class="expand-btn" type="button">развернуть</button>
+        </section>
+
+        <!-- Наряд 12 -->
+        <section class="outfit-block" data-category="medieval" data-tags="средневековье">
+            <div class="outfit-image">
+                <img src="img-source/medieval-12.png" alt="наряд 12">
+            </div>
+
+            <div class="outfit-head">
+                <span class="outfit-num">#12</span>
+                <span class="outfit-name">С красной вышивкой</span>
+            </div>
+
+            <div class="outfit-text" role="button" tabindex="0" title="нажми, чтобы скопировать">A traditional beige linen dress featuring intricate red cross-stitch embroidery on the neckline, sleeves, and hem. It has voluminous sleeves with gathered cuffs and is cinched at the waist with a matching red braided cord belt with tassel ends.</div>
+            <button class="expand-btn" type="button">развернуть</button>
+        </section>
+
+        </div>
+    </main>
+
+    <!-- Плавные переходы между страницами -->
+    <script src="js/page-transition.js"></script>
+
+    <script>
+        // Сортировка: подсветка активной кнопки + фильтрация нарядов
+        const filterBtns = Array.from(document.querySelectorAll('.filter-btn'));
+        const outfitBlocks = Array.from(document.querySelectorAll('.outfit-block'));
+
+        filterBtns.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                // подсвечиваем выбранную кнопку
+                filterBtns.forEach(function (b) { b.classList.remove('active'); });
+                btn.classList.add('active');
+
+                // показываем только подходящие наряды (блоки появятся позже)
+                const filter = btn.dataset.filter;
+                outfitBlocks.forEach(function (block) {
+                    const show = (filter === 'all') || (block.dataset.category === filter);
+                    block.style.display = show ? '' : 'none';
+                });
+            });
+        });
+
+        // Клик по тексту наряда — сразу копирует его в буфер обмена
+        document.querySelectorAll('.outfit-text').forEach(function (textEl) {
+            function copyText() {
+                navigator.clipboard.writeText(textEl.textContent).then(function () {
+                    textEl.classList.add('copied');
+                    setTimeout(function () {
+                        textEl.classList.remove('copied');
+                    }, 1200);
+                });
+            }
+
+            textEl.addEventListener('click', copyText);
+            textEl.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    copyText();
+                }
+            });
+        });
+
+        // Кнопка «развернуть»/«свернуть»: показывает весь текст или снова 3 строки
+        document.querySelectorAll('.outfit-block').forEach(function (block) {
+            const textEl = block.querySelector('.outfit-text');
+            const expandBtn = block.querySelector('.expand-btn');
+            if (!textEl || !expandBtn) return;
+
+            // Если текст короткий (умещается в 3 строки) — кнопка не нужна
+            requestAnimationFrame(function () {
+                if (textEl.scrollHeight <= textEl.clientHeight + 2) {
+                    expandBtn.style.display = 'none';
+                }
+            });
+
+            expandBtn.addEventListener('click', function () {
+                const expanded = textEl.classList.toggle('expanded');
+                expandBtn.textContent = expanded ? 'свернуть' : 'развернуть';
+            });
+        });
+    </script>
+
+</body>
+</html>
