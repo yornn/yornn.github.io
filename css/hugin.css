@@ -1,0 +1,79 @@
+/* Стили страницы «Шепот хугина» (hugin.html) */
+
+/* Экран ввода пароля — по центру */
+.password-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10vh;
+}
+
+/* Форма ввода пароля */
+.password-form {
+    display: flex;
+    gap: 10px;
+    margin-top: 30px;
+    align-items: center;
+}
+
+.password-input {
+    background-color: #161b22;
+    border: 1px solid #30363d;
+    color: #f0f6fc;
+    padding: 10px 16px;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    font-family: inherit;
+    width: 220px;
+    text-align: center;
+    transition: border-color 0.2s ease-in-out;
+}
+
+.password-input:focus {
+    outline: none;
+    border-color: #8b949e;
+}
+
+.password-input::placeholder {
+    color: #484f58;
+}
+
+/* Сообщение об ошибке */
+.password-error {
+    color: #f85149;
+    margin-top: 14px;
+    font-size: 0.95rem;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.password-error.visible {
+    opacity: 1;
+}
+
+/* Тряска формы при неверном пароле */
+.password-form.shake {
+    animation: shake 0.4s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    50% { transform: translateX(8px); }
+    75% { transform: translateX(-5px); }
+}
+
+/* Секретное содержимое */
+.secret-content {
+    max-width: 800px;
+}
+
+.whisper-list {
+    margin-top: 30px;
+}
+
+.whisper-placeholder {
+    color: #8b949e;
+    font-style: italic;
+    font-size: 2rem;
+}

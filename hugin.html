@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>yornn | Шепот хугина</title>
+    <!-- Общие стили + стили страницы шепота -->
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/hugin.css">
+</head>
+<body>
+
+    <!-- Шапка с кнопками -->
+    <nav class="nav-menu">
+        <a href="index.html" class="btn">главная</a>
+        <a href="images.html" class="btn">генерация картинок</a>
+        <a href="styles.html" class="btn">стили</a>
+        <a href="outfits.html" class="btn">наряды</a>
+        <a href="notes.html" class="btn">заметки</a>
+        <a href="hugin.html" class="btn">шепот хугина</a>
+    </nav>
+
+    <!-- Экран ввода пароля -->
+    <main class="content password-screen" id="passwordScreen">
+        <h1 class="profile-title">Шепот хугина 🐦‍⬛</h1>
+        <p class="profile-subtitle">Эта страница защищена. Введи пароль, чтобы услышать шепот.</p>
+
+        <form class="password-form" id="passwordForm">
+            <input type="password" class="password-input" id="passwordInput" placeholder="пароль" autocomplete="off" autofocus>
+            <button type="submit" class="btn">войти</button>
+        </form>
+        <p class="password-error" id="passwordError">неверный пароль, попробуй ещё раз</p>
+    </main>
+
+    <!-- Секретное содержимое (скрыто до ввода пароля) -->
+    <main class="content secret-content" id="secretContent" hidden>
+        <!-- Здесь будет секретное содержимое -->
+        <div class="whisper-list">
+            <p class="whisper-placeholder">Пока здесь тихо... Ворон ещё не принёс вестей.</p>
+        </div>
+    </main>
+
+    <!-- Плавные переходы между страницами -->
+    <script src="js/page-transition.js"></script>
+
+    <script>
+        // Простая защита паролем (клиентская, не для настоящих секретов)
+        const PASSWORD = 'kona';
+
+        const form = document.getElementById('passwordForm');
+        const input = document.getElementById('passwordInput');
+        const error = document.getElementById('passwordError');
+        const passwordScreen = document.getElementById('passwordScreen');
+        const secretContent = document.getElementById('secretContent');
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            if (input.value.trim().toLowerCase() === PASSWORD) {
+                passwordScreen.hidden = true;
+                secretContent.hidden = false;
+            } else {
+                error.classList.add('visible');
+                input.value = '';
+                input.focus();
+
+                // Тряска формы при ошибке
+                form.classList.add('shake');
+                setTimeout(function () {
+                    form.classList.remove('shake');
+                }, 400);
+
+                setTimeout(function () {
+                    error.classList.remove('visible');
+                }, 2500);
+            }
+        });
+    </script>
+
+</body>
+</html>
