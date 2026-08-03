@@ -291,15 +291,15 @@ body.page-leave {
     border-color: #8b949e;
 }
 
-/* Модальное окно на весь экран */
+/* Модальное окно на весь экран (прижато к верху, одинаковый отступ) */
 .style-modal {
     position: fixed;
     inset: 0;
     z-index: 100;
     display: none;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
-    padding: 32px;
+    padding: 24px 32px;
 }
 
 .style-modal.open {
@@ -323,18 +323,19 @@ body.page-leave {
     gap: 16px;
     max-width: 1200px;
     width: 100%;
-    max-height: calc(100vh - 48px);
+    height: calc(100vh - 48px); /* фиксированная высота для всех стилей */
     background-color: #161b22;
     border: 1px solid #30363d;
     border-radius: 14px;
     padding: 20px;
     box-shadow: 0 12px 48px rgba(0, 0, 0, 0.6);
-    overflow-y: auto;
+    overflow-y: auto; /* что не помещается — прокручивается */
 }
 
 .modal-image-wrap {
     position: relative;
     width: 100%;
+    flex-shrink: 0; /* рамка не сжимается под размер модалки */
     border-radius: 10px;
     overflow: hidden;
     background-color: #0d1117;
@@ -363,8 +364,7 @@ body.page-leave {
 
 .modal-image {
     width: 100%;
-    max-height: 70vh;
-    object-fit: contain;
+    height: auto; /* картинка в натуральном размере — не уменьшается и не увеличивается */
     display: block;
 }
 
@@ -439,4 +439,35 @@ body.page-leave {
 /* Блокировка прокрутки страницы при открытой модалке */
 body.modal-open {
     overflow: hidden;
+}
+
+/* Красивый скроллбар модалки: тонкая тёмная полоска, прозрачный фон */
+
+/* Firefox */
+.modal-content {
+    scrollbar-width: thin;
+    scrollbar-color: #30363d transparent;
+}
+
+/* Chrome / Edge / Safari */
+.modal-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background-color: #30363d;
+    border-radius: 8px; /* круглые концы полоски */
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+    background-color: #8b949e;
+}
+
+/* Стрелки-кнопки скроллбара убираем */
+.modal-content::-webkit-scrollbar-button {
+    display: none;
 }
