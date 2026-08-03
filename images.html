@@ -258,14 +258,32 @@ The lighting is low and warm, focused on the figures within the car. Across the 
         });
 
         // Счётчик промптов: "2 ПРОМПТОВ" (с правильным склонением)
+        // Ждём загрузки шрифта Norse, иначе на проде текст вставляется
+        // до подгрузки шрифта и остаётся фолбэком
         (function updatePromptsCount() {
-            const count = promptBlocks.length;
-            const n = count % 10;
-            const n100 = count % 100;
-            let word = 'ПРОМПТОВ';
-            if (n === 1 && n100 !== 11) word = 'ПРОМПТ';
-            else if (n >= 2 && n <= 4 && (n100 < 12 || n100 > 14)) word = 'ПРОМПТА';
-            document.getElementById('promptsCount').textContent = count + ' ' + word;
+            const el = document.getElementById('promptsCount');
+            function render() {
+                const count = promptBlocks.length;
+                const n = count % 10;
+                const n100 = count % 100;
+                let word = 'ПРОМПТОВ';
+                if (n === 1 && n100 !== 11) word = 'ПРОМПТ';
+                else if (n >= 2 && n <= 4 && (n100 < 12 || n100 > 14)) word = 'ПРОМПТА';
+                el.textContent = count + ' ' + word;
+                // Форсируем перерисовку, чтобы подхватился загруженный шрифт
+                el.style.fontFamily = 'serif';
+                void el.offsetWidth;
+                el.style.fontFamily = "'Norse', serif";
+            }
+
+            if (document.fonts && document.fonts.load) {
+                document.fonts.load('400 3rem Norse').then(render, render);
+            } else {
+                render();
+            }
+
+            // Страховка: перерисовать ещё раз после полной загрузки страницы
+            window.addEventListener('load', render);
         })();
     </script>
 
