@@ -26,9 +26,10 @@
 
         <!-- Блок стиля: клик по картинке раскрывает текст и кнопку -->
         <section class="style-block" data-hint="nb lite 2">
-            <!-- Картинка стиля (кликабельна) -->
+            <!-- Карусель картинок стиля (кликабельна) -->
             <div class="style-image" role="button" tabindex="0" title="нажми, чтобы раскрыть">
-                <img src="img-source/1style.jpeg" alt="стиль">
+<img src="img-source/style-1-1.jpeg" alt="стиль">
+<img src="img-source/style-1-2.jpeg" alt="стиль">
             </div>
 
             <!-- Скрытая часть: текст и кнопки -->
@@ -47,9 +48,10 @@
 
         <!-- Второй блок стиля -->
         <section class="style-block" data-hint="nb lite 2">
-            <!-- Картинка стиля (кликабельна) -->
+            <!-- Карусель картинок стиля (кликабельна) -->
             <div class="style-image" role="button" tabindex="0" title="нажми, чтобы раскрыть">
-                <img src="img-source/2style.jpeg" alt="стиль">
+<img src="img-source/style-2-1.jpeg" alt="стиль">
+<img src="img-source/style-2-2.jpeg" alt="стиль">
             </div>
 
             <!-- Скрытая часть: текст и кнопки -->
@@ -65,7 +67,7 @@
         <section class="style-block" data-hint="nb pro">
             <!-- Картинка стиля (кликабельна) -->
             <div class="style-image" role="button" tabindex="0" title="нажми, чтобы раскрыть">
-                <img src="img-source/3style.jpeg" alt="стиль">
+<img src="img-source/style-3-1.jpeg" alt="стиль">
             </div>
 
             <!-- Скрытая часть: текст и кнопки -->
@@ -84,9 +86,10 @@
 
         <!-- Четвёртый блок стиля -->
         <section class="style-block" data-hint="nb lite 2">
-            <!-- Картинка стиля (кликабельна) -->
+            <!-- Карусель картинок стиля (кликабельна) -->
             <div class="style-image" role="button" tabindex="0" title="нажми, чтобы раскрыть">
-                <img src="img-source/4style.jpeg" alt="стиль">
+<img src="img-source/style-4-1.jpeg" alt="стиль">
+<img src="img-source/style-4-2.jpeg" alt="стиль">
             </div>
 
             <!-- Скрытая часть: текст и кнопки -->
@@ -136,6 +139,73 @@
 
         // Копирование для всех кнопок на странице
         document.querySelectorAll('.copy-btn').forEach(attachCopyHandler);
+
+        // ============ Карусель картинок внутри каждого стиля ============
+        // На все картинки карусели вешается один img; текущая показывается,
+        // остальные скрыты. Стрелки ‹ › и точки переключают кадры.
+        document.querySelectorAll('.style-image').forEach(function (wrap) {
+            const imgs = Array.from(wrap.querySelectorAll('img'));
+            if (imgs.length === 0) return;
+
+            let idx = 0;
+
+            // показывает нужный кадр карусели
+            function show(i) {
+                idx = (i + imgs.length) % imgs.length;
+                imgs.forEach(function (im, n) {
+                    im.classList.toggle('active', n === idx);
+                });
+                dots.forEach(function (d, n) {
+                    d.classList.toggle('active', n === idx);
+                });
+            }
+
+            // элементы управления: только если картинок больше одной
+            let dots = [];
+            if (imgs.length > 1) {
+                wrap.classList.add('has-carousel');
+
+                // стрелки ‹ ›
+                const prevBtn = document.createElement('button');
+                prevBtn.className = 'carousel-arrow carousel-prev';
+                prevBtn.type = 'button';
+                prevBtn.textContent = '‹';
+                prevBtn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    show(idx - 1);
+                });
+
+                const nextBtn = document.createElement('button');
+                nextBtn.className = 'carousel-arrow carousel-next';
+                nextBtn.type = 'button';
+                nextBtn.textContent = '›';
+                nextBtn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    show(idx + 1);
+                });
+
+                wrap.appendChild(prevBtn);
+                wrap.appendChild(nextBtn);
+
+                // точки-индикаторы
+                const dotsWrap = document.createElement('div');
+                dotsWrap.className = 'carousel-dots';
+                imgs.forEach(function (_, n) {
+                    const dot = document.createElement('button');
+                    dot.className = 'carousel-dot';
+                    dot.type = 'button';
+                    dot.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        show(n);
+                    });
+                    dotsWrap.appendChild(dot);
+                    dots.push(dot);
+                });
+                wrap.appendChild(dotsWrap);
+            }
+
+            show(0);
+        });
 
         // Модальное окно: стиль на весь экран
         const modal = document.getElementById('styleModal');
@@ -198,7 +268,9 @@
         }
 
         function showInModal(block) {
-            const img = block.querySelector('.style-image img');
+            // берём ТЕКУЩУЮ (видимую) картинку карусели стиля
+            const img = block.querySelector('.style-image img.active')
+                     || block.querySelector('.style-image img');
 
             modalImage.src = img.src;
             buildModalTexts(block, modalTextWrap);
@@ -227,11 +299,8 @@
             showInModal(styleBlocks[prev]);
         }
 
-        // Открытие модалки по клику на картинку
+        // Открытие модалки по Enter/Space на картинке
         document.querySelectorAll('.style-image').forEach(function (img) {
-            img.addEventListener('click', function () {
-                openModal(img.closest('.style-block'));
-            });
             img.addEventListener('keydown', function (e) {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
@@ -245,6 +314,14 @@
         modal.addEventListener('click', function (e) {
             const keep = e.target.closest('.modal-image-wrap, .modal-text-wrap, .modal-arrow, .copy-btn');
             if (!keep) closeModal();
+        });
+
+        // Клик по картинке в блоке: НЕ открывает модалку, если нажата стрелка/точка
+        document.querySelectorAll('.style-image').forEach(function (img) {
+            img.addEventListener('click', function (e) {
+                if (e.target.closest('.carousel-arrow, .carousel-dot')) return;
+                openModal(img.closest('.style-block'));
+            });
         });
         document.addEventListener('keydown', function (e) {
             if (!modal.classList.contains('open')) return;
