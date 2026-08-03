@@ -256,6 +256,9 @@ body.page-leave {
 .copy-btn.copied {
     border-color: #3fb950;
     color: #3fb950;
+    font-family: 'Norse', serif;
+    font-weight: 700;
+    letter-spacing: 2px;
 }
 
 /* Кнопка "на весь экран" в углу картинки */
@@ -319,9 +322,9 @@ body.page-leave {
     position: relative;
     z-index: 1;
     display: flex;
-    flex-direction: column;
-    gap: 16px;
-    max-width: 1200px;
+    flex-direction: row; /* картинка слева, тексты справа */
+    gap: 20px;
+    max-width: 1400px;
     width: 100%;
     height: calc(100vh - 48px); /* фиксированная высота для всех стилей */
     background-color: #161b22;
@@ -329,13 +332,14 @@ body.page-leave {
     border-radius: 14px;
     padding: 20px;
     box-shadow: 0 12px 48px rgba(0, 0, 0, 0.6);
-    overflow-y: auto; /* что не помещается — прокручивается */
+    overflow: hidden;
 }
 
 .modal-image-wrap {
     position: relative;
-    width: 100%;
-    flex-shrink: 0; /* рамка не сжимается под размер модалки */
+    flex: 0 0 auto;
+    width: min(52vh, 58%); /* вписываем вертикальную картинку 3:4 по высоте окна */
+    aspect-ratio: 3 / 4; /* рамка повторяет форму картинки — без полос сверху/снизу */
     border-radius: 10px;
     overflow: hidden;
     background-color: #0d1117;
@@ -364,23 +368,42 @@ body.page-leave {
 
 .modal-image {
     width: 100%;
-    height: auto; /* картинка в натуральном размере — не уменьшается и не увеличивается */
+    height: 100%;
+    object-fit: cover; /* картинка заполняет рамку целиком, без полей */
     display: block;
 }
 
+/* Правая колонка с текстами — по высоте картинки, прокручивается внутри */
 .modal-text-wrap {
+    flex: 1 1 0;
+    min-width: 0;
+    height: 100%;
+    align-self: flex-start; /* высота колонки = высоте картинки */
     display: flex;
     flex-direction: column;
     gap: 12px;
+    overflow-y: auto;
+    padding-right: 6px;
 }
 
+/* Подписи в модалке — сдвинуты вправо от края колонки */
+.modal-text-wrap .style-label {
+    margin-left: 10px;
+}
+
+/* Текстовые поля в модалке: поуже и вытянутые по вертикали */
 .modal-text {
-    width: 100%;
+    width: calc(100% - 20px);
+    margin: 0 auto;
+    min-height: 180px;
+    flex-shrink: 0;
 }
 
 .modal-copy {
-    width: 100%;
+    width: calc(100% - 20px);
+    margin: 0 auto;
     justify-content: center;
+    flex-shrink: 0;
 }
 
 /* Стрелки навигации между стилями в модалке */
@@ -441,33 +464,33 @@ body.modal-open {
     overflow: hidden;
 }
 
-/* Красивый скроллбар модалки: тонкая тёмная полоска, прозрачный фон */
+/* Красивый скроллбар текстовой колонки: тонкая тёмная полоска, прозрачный фон */
 
 /* Firefox */
-.modal-content {
+.modal-text-wrap {
     scrollbar-width: thin;
     scrollbar-color: #30363d transparent;
 }
 
 /* Chrome / Edge / Safari */
-.modal-content::-webkit-scrollbar {
+.modal-text-wrap::-webkit-scrollbar {
     width: 8px;
 }
 
-.modal-content::-webkit-scrollbar-track {
+.modal-text-wrap::-webkit-scrollbar-track {
     background: transparent;
 }
 
-.modal-content::-webkit-scrollbar-thumb {
+.modal-text-wrap::-webkit-scrollbar-thumb {
     background-color: #30363d;
     border-radius: 8px; /* круглые концы полоски */
 }
 
-.modal-content::-webkit-scrollbar-thumb:hover {
+.modal-text-wrap::-webkit-scrollbar-thumb:hover {
     background-color: #8b949e;
 }
 
 /* Стрелки-кнопки скроллбара убираем */
-.modal-content::-webkit-scrollbar-button {
+.modal-text-wrap::-webkit-scrollbar-button {
     display: none;
 }
