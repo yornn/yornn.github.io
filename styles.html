@@ -30,6 +30,7 @@
             <div class="style-image" role="button" tabindex="0" title="нажми, чтобы раскрыть">
 <img src="img-source/style-1-1.jpeg" alt="стиль">
 <img src="img-source/style-1-2.jpeg" alt="стиль">
+<img src="img-source/style-1-3.jpeg" alt="стиль">
             </div>
 
             <!-- Скрытая часть: текст и кнопки -->
@@ -52,6 +53,7 @@
             <div class="style-image" role="button" tabindex="0" title="нажми, чтобы раскрыть">
 <img src="img-source/style-2-1.jpeg" alt="стиль">
 <img src="img-source/style-2-2.jpeg" alt="стиль">
+<img src="img-source/style-2-3.jpeg" alt="стиль">
             </div>
 
             <!-- Скрытая часть: текст и кнопки -->
@@ -90,6 +92,7 @@
             <div class="style-image" role="button" tabindex="0" title="нажми, чтобы раскрыть">
 <img src="img-source/style-4-1.jpeg" alt="стиль">
 <img src="img-source/style-4-2.jpeg" alt="стиль">
+<img src="img-source/style-4-3.jpeg" alt="стиль">
             </div>
 
             <!-- Скрытая часть: текст и кнопки -->
@@ -140,16 +143,29 @@
         // Копирование для всех кнопок на странице
         document.querySelectorAll('.copy-btn').forEach(attachCopyHandler);
 
-        // ============ Карусель картинок внутри каждого стиля ============
-        // На все картинки карусели вешается один img; текущая показывается,
-        // остальные скрыты. Стрелки ‹ › и точки переключают кадры.
-        document.querySelectorAll('.style-image').forEach(function (wrap) {
-            const imgs = Array.from(wrap.querySelectorAll('img'));
-            if (imgs.length === 0) return;
+        // ============ Универсальная карусель картинок ============
+        // Оборачивает img-элементы в трек, стрелки ‹ › и точки.
+        // При наведении начинает медленно перелистываться сама.
+        function initCarousel(container, opts) {
+            const settings = Object.assign({
+                delay: 1800,        // скорость автопрокрутки (мс)
+                arrowsOnHover: true // стрелки только при наведении
+            }, opts || {});
+
+            const imgs = Array.from(container.querySelectorAll('img'));
+            if (imgs.length === 0) return { show: function () {} };
+
+            let dots = []; // точки-индикаторы (заполняются ниже)
+
+            // Трек с кадрами
+            const track = document.createElement('div');
+            track.className = 'carousel-track';
+            container.insertBefore(track, container.firstChild);
+            imgs.forEach(function (im) { track.appendChild(im); });
 
             let idx = 0;
+            let timer = null;
 
-            // показывает нужный кадр карусели
             function show(i) {
                 idx = (i + imgs.length) % imgs.length;
                 imgs.forEach(function (im, n) {
@@ -160,10 +176,20 @@
                 });
             }
 
-            // элементы управления: только если картинок больше одной
-            let dots = [];
+            function startAuto() {
+                if (imgs.length < 2 || timer) return;
+                timer = setInterval(function () { show(idx + 1); }, settings.delay);
+            }
+
+            function stopAuto() {
+                if (!timer) return;
+                clearInterval(timer);
+                timer = null;
+            }
+
+            // Элементы управления — только если картинок больше одной
             if (imgs.length > 1) {
-                wrap.classList.add('has-carousel');
+                container.classList.add('has-carousel');
 
                 // стрелки ‹ ›
                 const prevBtn = document.createElement('button');
@@ -184,8 +210,12 @@
                     show(idx + 1);
                 });
 
-                wrap.appendChild(prevBtn);
-                wrap.appendChild(nextBtn);
+                container.appendChild(prevBtn);
+                container.appendChild(nextBtn);
+
+                if (!settings.arrowsOnHover) {
+                    container.classList.add('arrows-always');
+                }
 
                 // точки-индикаторы
                 const dotsWrap = document.createElement('div');
@@ -201,10 +231,20 @@
                     dotsWrap.appendChild(dot);
                     dots.push(dot);
                 });
-                wrap.appendChild(dotsWrap);
+                container.appendChild(dotsWrap);
+
+                // Автопрокрутка при наведении, остановка при уходе курсора
+                container.addEventListener('mouseenter', startAuto);
+                container.addEventListener('mouseleave', stopAuto);
             }
 
             show(0);
+            return { show: show };
+        }
+
+        // Карусели в блоках стилей на странице
+        document.querySelectorAll('.style-image').forEach(function (wrap) {
+            initCarousel(wrap, { delay: 1800 });
         });
 
         // Модальное окно: стиль на весь экран
@@ -218,17 +258,17 @@
         function buildModalTexts(block, container) {
             container.innerHTML = '';
 
-            block.querySelectorAll('.style-text').forEach(function (text) {
+            const texts = Array.from(block.querySelectorAll('.style-text'));
+            const styleNum = styleBlocks.indexOf(block) + 1;
+            texts.forEach(function (text, i) {
                 // Заголовок плашки: подпись слева, компактная кнопка справа
                 const head = document.createElement('div');
                 head.className = 'modal-text-head';
 
-                const label = text.previousElementSibling;
+                // Подписи всегда: первая плашка — «стиль #N», вторая — «негатив»
                 const labelEl = document.createElement('span');
                 labelEl.className = 'style-label';
-                labelEl.textContent = (label && label.classList.contains('style-label'))
-                    ? label.textContent
-                    : 'промпт';
+                labelEl.textContent = (i === 0) ? ('стиль #' + styleNum) : 'негатив';
                 head.appendChild(labelEl);
 
                 // Компактная кнопка копирования напротив заголовка
@@ -258,6 +298,12 @@
                 textarea.readOnly = true;
                 textarea.value = text.value;
                 container.appendChild(textarea);
+
+                // Растягиваем поле под весь текст — чтобы он помещался полностью
+                requestAnimationFrame(function () {
+                    textarea.style.height = 'auto';
+                    textarea.style.height = textarea.scrollHeight + 'px';
+                });
             });
 
             // Подсказка («nb pro» и т.п.) — в правом нижнем углу текста
@@ -267,12 +313,38 @@
             container.appendChild(hint);
         }
 
-        function showInModal(block) {
-            // берём ТЕКУЩУЮ (видимую) картинку карусели стиля
-            const img = block.querySelector('.style-image img.active')
-                     || block.querySelector('.style-image img');
+        // Карусель внутри модалки: кадры текущего стиля, стрелки всегда видимы.
+        // Автопрокрутка при наведении на картинку работает и здесь.
+        const modalImageWrap = modal.querySelector('.modal-image-wrap');
+        let modalCarousel = null;
+        let modalImgs = [];
 
-            modalImage.src = img.src;
+        function showInModal(block) {
+            // Собираем карусель модалки из картинок выбранного стиля
+            const srcs = Array.from(block.querySelectorAll('.style-image img'))
+                .map(function (im) { return im.getAttribute('src'); });
+
+            // очищаем предыдущую карусель
+            modalImageWrap.innerHTML = '';
+            modalImgs = srcs.map(function (src) {
+                const im = document.createElement('img');
+                im.className = 'modal-image';
+                im.src = src;
+                im.alt = 'стиль';
+                modalImageWrap.appendChild(im);
+                return im;
+            });
+
+            // текущий кадр = тот, что был виден в блоке на странице
+            const activeIdx = Array.from(block.querySelectorAll('.style-image img'))
+                .findIndex(function (im) { return im.classList.contains('active'); });
+
+            modalCarousel = initCarousel(modalImageWrap, {
+                delay: 1800,
+                arrowsOnHover: false // в модалке стрелки видны всегда
+            });
+            modalCarousel.show(activeIdx >= 0 ? activeIdx : 0);
+
             buildModalTexts(block, modalTextWrap);
             currentIndex = styleBlocks.indexOf(block);
         }
@@ -310,9 +382,9 @@
         });
 
         // Закрытие: клик по ЛЮБОМУ пустому месту модалки.
-        // Не закрывают только: картинка с рамкой, тексты, стрелки, кнопки копирования
+        // Не закрывают только: картинка с рамкой, тексты, стрелки карусели, кнопки копирования
         modal.addEventListener('click', function (e) {
-            const keep = e.target.closest('.modal-image-wrap, .modal-text-wrap, .modal-arrow, .copy-btn');
+            const keep = e.target.closest('.modal-image-wrap, .modal-text-wrap, .carousel-arrow, .carousel-dot, .copy-btn');
             if (!keep) closeModal();
         });
 

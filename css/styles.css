@@ -201,8 +201,13 @@ body.page-leave {
     transform: translateY(-2px);
 }
 
-/* Кадры карусели: наложены друг на друга, виден только .active */
-.style-image img {
+/* Трек карусели: кадры наложены друг на друга, виден только .active */
+.carousel-track {
+    position: absolute;
+    inset: 0;
+}
+
+.carousel-track img {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -210,20 +215,15 @@ body.page-leave {
     object-fit: cover;
     display: block;
     opacity: 0;
-    transition: opacity 0.25s ease-in-out;
+    transition: opacity 0.3s ease-in-out;
     pointer-events: none;
 }
 
-.style-image img.active {
+.carousel-track img.active {
     opacity: 1;
 }
 
-/* Если картинка одна (без карусели) — она тоже должна показываться */
-.style-image:not(.has-carousel) img {
-    opacity: 1;
-}
-
-/* Стрелки карусели ‹ › */
+/* Стрелки карусели ‹ › — по умолчанию видны при наведении */
 .carousel-arrow {
     position: absolute;
     top: 50%;
@@ -246,7 +246,12 @@ body.page-leave {
     padding-bottom: 3px;
 }
 
-.style-image:hover .carousel-arrow {
+.has-carousel:hover .carousel-arrow {
+    opacity: 1;
+}
+
+/* В модалке стрелки видны всегда */
+.arrows-always .carousel-arrow {
     opacity: 1;
 }
 
@@ -410,7 +415,7 @@ body.page-leave {
     flex-shrink: 0;
     font-family: 'Norse', serif;
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: 1.6rem;
     letter-spacing: 2px;
     text-transform: uppercase;
     color: rgba(240, 246, 252, 0.55);
@@ -429,6 +434,17 @@ body.page-leave {
     display: block;
 }
 
+/* Карусель внутри модалки: стрелки крупнее, точки на затемнении */
+.modal-image-wrap .carousel-arrow {
+    width: 44px;
+    height: 64px;
+    font-size: 2.4rem;
+}
+
+.modal-image-wrap .carousel-dots {
+    bottom: 14px;
+}
+
 /* Правая колонка с текстами — начинается от верхнего края картинки */
 .modal-text-wrap {
     flex: 1 1 0;
@@ -437,7 +453,7 @@ body.page-leave {
     align-self: flex-start;
     display: flex;
     flex-direction: column;
-    gap: 30px; /* больше воздуха между плашками: негатив опущен ниже */
+    gap: 50px; /* ещё больше воздуха между текстом стиля и негативом */
     overflow-y: auto;
     padding-right: 6px;
 }
@@ -463,7 +479,7 @@ body.page-leave {
     left: 0;
     right: 0;
     bottom: 0;
-    height: 3px;
+    height: 2px;
     background-color: rgba(240, 246, 252, 0.9);
     border-radius: 50%;
     /* длинное мягкое растворение концов — переход от волоса к середине очень плавный */
@@ -476,13 +492,14 @@ body.page-leave {
 .modal-text {
     width: calc(100% - 20px);
     margin: 0 auto;
-    min-height: 180px;
     flex-shrink: 0;
     background-color: transparent;
     border: none;
-    padding: 12px 0;
+    padding: 0;
+    margin-top: -6px; /* текст вплотную к линии-разделителю */
     resize: none;
     font-size: 1.25rem;
+    overflow: hidden; /* поле растягивается под весь текст, без внутреннего скролла */
 }
 
 .modal-text:focus {
