@@ -21,8 +21,8 @@
 
     <!-- Содержимое страницы -->
     <main class="content">
-        <h1 class="profile-title">Генерация картинок 🖼️</h1>
-        <p class="profile-subtitle">Здесь хранятся промпты и трофеи для генерации</p>
+        <!-- Счётчик промптов: заполняется автоматически -->
+        <h1 class="prompts-count" id="promptsCount"></h1>
 
         <!-- Ряд блоков промптов -->
         <div class="prompts-row">
@@ -75,6 +75,31 @@ DEPTH: Strong layered collage effect. Decorative paper elements overlap one anot
 LIGHTING: Soft, warm, slightly muted lighting with gentle pastel highlights. Vintage print colors with subtle paper texture, delicate film grain, low saturation, warm cream tones, dusty pinks, faded reds, and muted browns. Everything feels nostalgic and cozy despite the disturbing emotional contrast. 
 
 MOOD: Innocent romance mixed with quiet obsession. Figure 1 radiates warmth, shyness, and sincerity, while Figure 2 silently watches with unmistakable infatuation. The contrast between the adorable scrapbook aesthetic and the unsettling one-sided gaze creates a psychological horror atmosphere hidden beneath an overwhelmingly cute presentation.</textarea>
+        </section>
+
+        <!-- Третий блок промпта -->
+        <section class="prompt-block">
+            <div class="prompt-image" role="button" tabindex="0" title="нажми, чтобы раскрыть на весь экран">
+                <img src="img-source/prompt-3.jpeg" alt="промпт 3">
+                <!-- Всплывающая кнопка копирования (появляется при наведении) -->
+                <button class="btn copy-btn hover-copy" type="button">копировать</button>
+            </div>
+
+            <!-- Скрытый текст промпта: копируется кнопкой и показывается в модалке -->
+            <textarea class="prompt-text" readonly hidden>STYLE: 
+
+
+SCENE: Low angle. Square image. A slightly grainy illustration taken inside a car at night, capturing a moment that combines seriousness and subtle humor. The atmosphere is warm, with dim interior lighting creating soft shadows.
+
+
+FIRST FIGURE (on foreground):
+The first figure sits in the driver's seat by the car window. Seated in the front of the car, facing the camera. First figure is taking a selfie, holding the camera with an extended arm out of frame. First figure's head is turned to face the lens directly, holding a steady, upright posture. First figure has a calm, slightly deadpan expression.
+
+
+SECOND FIGURE (on background):
+The second figure leans over the first figure; the second figure's target is the window next to which the first figure is sitting. Initially, the second figure sits in the passenger seat, which is located off-screen; the figure reaches out from there. The torso and lower part of the second figure are tilted past the first figure, extending past it towards the window. Because of this deep, reaching lean, its lower half - specifically its hips and buttocks - is thrust prominently backward and elevated, dominating the right side of the illustration's foreground. The bottom of the second figure is located next to the chest of the first. Second figure's upper body is mostly obscured and turned away as figure leans its head and shoulders toward the open window.
+The scene is set tightly within the passenger side of a dark car interior, with a leather headrest, dashboard elements, and a mirror visible in the blurry background. Through the open window on the right, the blurred lights and architecture of a nighttime environment, likely a food establishment (car pickup window), are hinted at, emphasizing the spatial relationship of ordering from the car.
+The lighting is low and warm, focused on the figures within the car. Across the center a dark overlay bar with the white, centered text: "He wants to order." The low angle makes the contorted form of second figure appear massive and central. The focus is sharp on first figure face and the prominent buttocks of second figure.</textarea>
         </section>
 
         </div>
@@ -215,8 +240,12 @@ MOOD: Innocent romance mixed with quiet obsession. Figure 1 radiates warmth, shy
             }
         }, { passive: false });
 
-        // Закрытие: клик по пустому месту (фону), Escape; стрелки листают промпты
-        modal.querySelector('.modal-backdrop').addEventListener('click', closeModal);
+        // Закрытие: клик по ЛЮБОМУ пустому месту модалки.
+        // Не закрывают только: сама картинка, текст промпта, стрелки, кнопка копирования
+        modal.addEventListener('click', function (e) {
+            const keep = e.target.closest('.modal-image, .modal-text-wrap, .modal-arrow, .copy-btn');
+            if (!keep) closeModal();
+        });
         document.addEventListener('keydown', function (e) {
             if (!modal.classList.contains('open')) return;
             if (e.key === 'Escape') {
@@ -227,6 +256,17 @@ MOOD: Innocent romance mixed with quiet obsession. Figure 1 radiates warmth, shy
                 showPrev();
             }
         });
+
+        // Счётчик промптов: "2 ПРОМПТОВ" (с правильным склонением)
+        (function updatePromptsCount() {
+            const count = promptBlocks.length;
+            const n = count % 10;
+            const n100 = count % 100;
+            let word = 'ПРОМПТОВ';
+            if (n === 1 && n100 !== 11) word = 'ПРОМПТ';
+            else if (n >= 2 && n <= 4 && (n100 < 12 || n100 > 14)) word = 'ПРОМПТА';
+            document.getElementById('promptsCount').textContent = count + ' ' + word;
+        })();
     </script>
 
 </body>

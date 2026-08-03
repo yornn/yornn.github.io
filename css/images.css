@@ -129,6 +129,18 @@ body.page-leave {
 
 /* ============ Специфика страницы генерации картинок ============ */
 
+/* Счётчик промптов: "2 ПРОМПТОВ" — Norse Regular, заглавные, по центру */
+.prompts-count {
+    font-family: 'Norse', serif;
+    font-weight: 400;
+    font-size: 3rem;
+    letter-spacing: 6px;
+    color: #f0f6fc;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
 /* Контент шире, чтобы влезал ряд блоков */
 .content {
     max-width: 1600px;
