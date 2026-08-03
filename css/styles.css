@@ -141,7 +141,7 @@ body.page-leave {
     flex-direction: row;
     flex-wrap: wrap;
     gap: 24px;
-    margin-top: 40px;
+    margin-top: 8px;
     justify-content: center;
     align-items: flex-start; /* блоки не растягиваются по высоте соседа */
 }
@@ -208,20 +208,15 @@ body.page-leave {
     display: block;
 }
 
-/* Скрытая часть: текст + кнопка (раскрывается по клику) */
+/* Скрытая часть: тексты хранятся в блоке, но не показываются на странице
+   (подтягиваются в модалку при клике на картинку) */
 .style-details {
     display: none;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.style-block.open .style-details {
-    display: flex;
 }
 
 /* Подпись плашки (промпт / негатив) */
 .style-label {
-    font-size: 0.9rem;
+    font-size: 1.6rem;
     color: #8b949e;
     letter-spacing: 1px;
     text-transform: uppercase;
@@ -261,37 +256,9 @@ body.page-leave {
     letter-spacing: 2px;
 }
 
-/* Кнопка "на весь экран" в углу картинки */
+/* Картинке нужен relative для абсолютно спозиционированных элементов внутри */
 .style-image {
     position: relative;
-}
-
-.expand-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    background-color: rgba(13, 17, 23, 0.8);
-    border: 1px solid #30363d;
-    color: #f0f6fc;
-    font-size: 1.1rem;
-    line-height: 1;
-    cursor: pointer;
-    opacity: 0;
-    transition: opacity 0.2s ease-in-out, border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
-    z-index: 3;
-}
-
-.style-image:hover .expand-btn,
-.expand-btn:focus-visible {
-    opacity: 1;
-}
-
-.expand-btn:hover {
-    background-color: #21262d;
-    border-color: #8b949e;
 }
 
 /* Модальное окно на весь экран (прижато к верху, одинаковый отступ) */
@@ -343,15 +310,19 @@ body.page-leave {
     border-radius: 10px;
     overflow: hidden;
     background-color: #0d1117;
-    border: 1px solid #30363d;
+    border: 1px solid rgba(240, 246, 252, 0.9); /* тонкая рамка */
+    box-shadow:
+        0 0 12px rgba(240, 246, 252, 0.45),
+        0 0 32px rgba(240, 246, 252, 0.25),
+        inset 0 0 8px rgba(240, 246, 252, 0.15); /* постоянное свечение */
 }
 
-/* Полупрозрачная светящаяся подсказка поверх картинки в модалке */
+/* Полупрозрачная светящаяся подсказка — в правом нижнем углу текста */
 .modal-hint {
-    position: absolute;
-    top: 14px;
-    left: 14px;
+    align-self: flex-end;
+    margin-top: auto;
     padding: 6px 14px;
+    flex-shrink: 0;
     font-family: 'Norse', serif;
     font-weight: 700;
     font-size: 1.1rem;
@@ -373,90 +344,74 @@ body.page-leave {
     display: block;
 }
 
-/* Правая колонка с текстами — по высоте картинки, прокручивается внутри */
+/* Правая колонка с текстами — начинается от верхнего края картинки */
 .modal-text-wrap {
     flex: 1 1 0;
     min-width: 0;
     height: 100%;
-    align-self: flex-start; /* высота колонки = высоте картинки */
+    align-self: flex-start;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 30px; /* больше воздуха между плашками: негатив опущен ниже */
     overflow-y: auto;
     padding-right: 6px;
 }
 
-/* Подписи в модалке — сдвинуты вправо от края колонки */
-.modal-text-wrap .style-label {
-    margin-left: 10px;
+/* Заголовок плашки: подпись слева, кнопка справа.
+   Белая линия снизу — тонкая по краям, утолщается к центру */
+.modal-text-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: calc(100% - 20px);
+    margin: 0 auto;
+    padding-bottom: 20px; /* больше воздуха между заголовком и линией */
+    flex-shrink: 0;
+    position: relative;
 }
 
-/* Текстовые поля в модалке: поуже и вытянутые по вертикали */
+/* Линия-«веретено»: плавный переход — волосистая по краям, толстая в центре.
+   Форма — эллипс (0px на концах → 5px в середине), концы мягко растворяются */
+.modal-text-head::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 3px;
+    background-color: rgba(240, 246, 252, 0.9);
+    border-radius: 50%;
+    /* длинное мягкое растворение концов — переход от волоса к середине очень плавный */
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.25) 12%, #000 35%, #000 65%, rgba(0,0,0,0.25) 88%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.25) 12%, #000 35%, #000 65%, rgba(0,0,0,0.25) 88%, transparent 100%);
+}
+
+/* Текстовые поля в модалке: без тёмной подложки и рамки —
+   текст лежит прямо на общем блоке с картинкой */
 .modal-text {
     width: calc(100% - 20px);
     margin: 0 auto;
     min-height: 180px;
     flex-shrink: 0;
+    background-color: transparent;
+    border: none;
+    padding: 12px 0;
+    resize: none;
+    font-size: 1.25rem;
 }
 
+.modal-text:focus {
+    outline: none;
+    border: none;
+}
+
+/* Компактная кнопка копирования напротив заголовка */
 .modal-copy {
-    width: calc(100% - 20px);
-    margin: 0 auto;
+    width: auto;
+    padding: 6px 16px;
+    font-size: 1rem;
     justify-content: center;
     flex-shrink: 0;
-}
-
-/* Стрелки навигации между стилями в модалке */
-.modal-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background-color: rgba(13, 17, 23, 0.8);
-    border: 1px solid #30363d;
-    color: #f0f6fc;
-    font-size: 1.3rem;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, transform 0.2s ease-in-out;
-    z-index: 2;
-}
-
-.modal-arrow:hover {
-    background-color: #21262d;
-    border-color: #8b949e;
-    transform: translateY(-50%) scale(1.08);
-}
-
-.modal-prev {
-    left: 24px;
-}
-
-.modal-next {
-    right: 24px;
-}
-
-/* Кнопка закрытия модалки */
-.modal-close {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    background-color: rgba(13, 17, 23, 0.8);
-    border: 1px solid #30363d;
-    color: #f0f6fc;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-    z-index: 2;
-}
-
-.modal-close:hover {
-    background-color: #21262d;
-    border-color: #8b949e;
 }
 
 /* Блокировка прокрутки страницы при открытой модалке */

@@ -21,9 +21,6 @@
 
     <!-- Содержимое страницы -->
     <main class="content">
-        <h1 class="profile-title">Стили</h1>
-        <p class="profile-subtitle">Склад всевозможных стилей для генерации</p>
-
         <!-- Ряд блоков стилей (горизонтально) -->
         <div class="styles-row">
 
@@ -32,7 +29,6 @@
             <!-- Картинка стиля (кликабельна) -->
             <div class="style-image" role="button" tabindex="0" title="нажми, чтобы раскрыть">
                 <img src="img-source/1style.jpeg" alt="стиль">
-                <button class="expand-btn" type="button" title="на весь экран">⤢</button>
             </div>
 
             <!-- Скрытая часть: текст и кнопки -->
@@ -54,7 +50,6 @@
             <!-- Картинка стиля (кликабельна) -->
             <div class="style-image" role="button" tabindex="0" title="нажми, чтобы раскрыть">
                 <img src="img-source/2style.jpeg" alt="стиль">
-                <button class="expand-btn" type="button" title="на весь экран">⤢</button>
             </div>
 
             <!-- Скрытая часть: текст и кнопки -->
@@ -71,7 +66,6 @@
             <!-- Картинка стиля (кликабельна) -->
             <div class="style-image" role="button" tabindex="0" title="нажми, чтобы раскрыть">
                 <img src="img-source/3style.jpeg" alt="стиль">
-                <button class="expand-btn" type="button" title="на весь экран">⤢</button>
             </div>
 
             <!-- Скрытая часть: текст и кнопки -->
@@ -93,7 +87,6 @@
             <!-- Картинка стиля (кликабельна) -->
             <div class="style-image" role="button" tabindex="0" title="нажми, чтобы раскрыть">
                 <img src="img-source/4style.jpeg" alt="стиль">
-                <button class="expand-btn" type="button" title="на весь экран">⤢</button>
             </div>
 
             <!-- Скрытая часть: текст и кнопки -->
@@ -111,13 +104,9 @@
     <!-- Модальное окно: стиль на весь экран -->
     <div class="style-modal" id="styleModal">
         <div class="modal-backdrop"></div>
-        <button class="modal-arrow modal-prev" type="button" title="предыдущий стиль">❮</button>
-        <button class="modal-arrow modal-next" type="button" title="следующий стиль">❯</button>
         <div class="modal-content">
-            <button class="modal-close" type="button" title="закрыть">✕</button>
             <div class="modal-image-wrap">
                 <img class="modal-image" src="" alt="стиль">
-                <span class="modal-hint"></span>
             </div>
             <!-- Текстовые плашки заполняются динамически из блока стиля -->
             <div class="modal-text-wrap"></div>
@@ -128,20 +117,6 @@
     <script src="js/page-transition.js"></script>
 
     <script>
-        // Раскрытие/скрытие деталей по клику на картинку
-        document.querySelectorAll('.style-image').forEach(function (img) {
-            function toggle() {
-                img.closest('.style-block').classList.toggle('open');
-            }
-            img.addEventListener('click', toggle);
-            img.addEventListener('keydown', function (e) {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    toggle();
-                }
-            });
-        });
-
         // Обработчик копирования текста из textarea над кнопкой
         function attachCopyHandler(btn) {
             btn.addEventListener('click', function () {
@@ -165,46 +140,67 @@
         // Модальное окно: стиль на весь экран
         const modal = document.getElementById('styleModal');
         const modalImage = modal.querySelector('.modal-image');
-        const modalHint = modal.querySelector('.modal-hint');
         const modalTextWrap = modal.querySelector('.modal-text-wrap');
         const styleBlocks = Array.from(document.querySelectorAll('.style-block'));
         let currentIndex = -1;
 
-        // Собирает текстовые плашки (подпись + поле + кнопка) из блока стиля
+        // Собирает текстовые плашки (заголовок + линия + текст) из блока стиля
         function buildModalTexts(block, container) {
             container.innerHTML = '';
 
             block.querySelectorAll('.style-text').forEach(function (text) {
-                // Подпись берём из ближайшего label перед полем
-                const label = text.previousElementSibling;
-                if (label && label.classList.contains('style-label')) {
-                    const labelEl = document.createElement('span');
-                    labelEl.className = 'style-label';
-                    labelEl.textContent = label.textContent;
-                    container.appendChild(labelEl);
-                }
+                // Заголовок плашки: подпись слева, компактная кнопка справа
+                const head = document.createElement('div');
+                head.className = 'modal-text-head';
 
+                const label = text.previousElementSibling;
+                const labelEl = document.createElement('span');
+                labelEl.className = 'style-label';
+                labelEl.textContent = (label && label.classList.contains('style-label'))
+                    ? label.textContent
+                    : 'промпт';
+                head.appendChild(labelEl);
+
+                // Компактная кнопка копирования напротив заголовка
+                const copyBtn = document.createElement('button');
+                copyBtn.className = 'btn copy-btn modal-copy';
+                copyBtn.type = 'button';
+                copyBtn.textContent = 'копировать';
+                copyBtn.addEventListener('click', function () {
+                    navigator.clipboard.writeText(textarea.value).then(function () {
+                        const oldLabel = copyBtn.textContent;
+                        copyBtn.textContent = 'SKÅL!';
+                        copyBtn.classList.add('copied');
+                        setTimeout(function () {
+                            copyBtn.textContent = oldLabel;
+                            copyBtn.classList.remove('copied');
+                        }, 1500);
+                    });
+                });
+                head.appendChild(copyBtn);
+
+                container.appendChild(head);
+
+                // Текст без подложки, прямо на общем блоке
                 const textarea = document.createElement('textarea');
                 textarea.className = 'style-text modal-text';
                 textarea.rows = 4;
                 textarea.readOnly = true;
                 textarea.value = text.value;
                 container.appendChild(textarea);
-
-                const copyBtn = document.createElement('button');
-                copyBtn.className = 'btn copy-btn modal-copy';
-                copyBtn.type = 'button';
-                copyBtn.textContent = 'копировать';
-                attachCopyHandler(copyBtn);
-                container.appendChild(copyBtn);
             });
+
+            // Подсказка («nb pro» и т.п.) — в правом нижнем углу текста
+            const hint = document.createElement('span');
+            hint.className = 'modal-hint';
+            hint.textContent = block.dataset.hint || '';
+            container.appendChild(hint);
         }
 
         function showInModal(block) {
             const img = block.querySelector('.style-image img');
 
             modalImage.src = img.src;
-            modalHint.textContent = block.dataset.hint || '';
             buildModalTexts(block, modalTextWrap);
             currentIndex = styleBlocks.indexOf(block);
         }
@@ -231,20 +227,25 @@
             showInModal(styleBlocks[prev]);
         }
 
-        modal.querySelector('.modal-next').addEventListener('click', showNext);
-        modal.querySelector('.modal-prev').addEventListener('click', showPrev);
-
-        // Открытие по кнопке ⤢ (не триггеря раскрытие блока)
-        document.querySelectorAll('.expand-btn').forEach(function (btn) {
-            btn.addEventListener('click', function (e) {
-                e.stopPropagation();
-                openModal(btn.closest('.style-block'));
+        // Открытие модалки по клику на картинку
+        document.querySelectorAll('.style-image').forEach(function (img) {
+            img.addEventListener('click', function () {
+                openModal(img.closest('.style-block'));
+            });
+            img.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    openModal(img.closest('.style-block'));
+                }
             });
         });
 
-        // Закрытие: крестик, клик по фону, Escape
-        modal.querySelector('.modal-close').addEventListener('click', closeModal);
-        modal.querySelector('.modal-backdrop').addEventListener('click', closeModal);
+        // Закрытие: клик по ЛЮБОМУ пустому месту модалки.
+        // Не закрывают только: картинка с рамкой, тексты, стрелки, кнопки копирования
+        modal.addEventListener('click', function (e) {
+            const keep = e.target.closest('.modal-image-wrap, .modal-text-wrap, .modal-arrow, .copy-btn');
+            if (!keep) closeModal();
+        });
         document.addEventListener('keydown', function (e) {
             if (!modal.classList.contains('open')) return;
             if (e.key === 'Escape') {
