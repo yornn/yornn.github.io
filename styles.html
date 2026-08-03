@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>yornn | Стили</title>
-    <!-- Общие стили + стили страницы стилей -->
-    <link rel="stylesheet" href="css/common.css">
+    <!-- Стили страницы стилей -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -29,10 +28,10 @@
         <div class="styles-row">
 
         <!-- Блок стиля: клик по картинке раскрывает текст и кнопку -->
-        <section class="style-block">
+        <section class="style-block" data-hint="nb lite 2">
             <!-- Картинка стиля (кликабельна) -->
             <div class="style-image" role="button" tabindex="0" title="нажми, чтобы раскрыть">
-                <img src="img-source/iig_2026-08-02T14-13-56-425Z.jpg" alt="стиль">
+                <img src="img-source/1style.jpeg" alt="стиль">
                 <button class="expand-btn" type="button" title="на весь экран">⤢</button>
             </div>
 
@@ -51,10 +50,10 @@
         </section>
 
         <!-- Второй блок стиля -->
-        <section class="style-block">
+        <section class="style-block" data-hint="nb lite 2">
             <!-- Картинка стиля (кликабельна) -->
             <div class="style-image" role="button" tabindex="0" title="нажми, чтобы раскрыть">
-                <img src="img-source/iig_2026-08-01T19-29-15-940Z.jpg" alt="стиль">
+                <img src="img-source/2style.jpeg" alt="стиль">
                 <button class="expand-btn" type="button" title="на весь экран">⤢</button>
             </div>
 
@@ -68,10 +67,10 @@
         </section>
 
         <!-- Третий блок стиля -->
-        <section class="style-block">
+        <section class="style-block" data-hint="nb pro">
             <!-- Картинка стиля (кликабельна) -->
             <div class="style-image" role="button" tabindex="0" title="нажми, чтобы раскрыть">
-                <img src="img-source/iig_2026-06-19T21-14-06-770Z.png" alt="стиль">
+                <img src="img-source/3style.jpeg" alt="стиль">
                 <button class="expand-btn" type="button" title="на весь экран">⤢</button>
             </div>
 
@@ -90,10 +89,10 @@
         </section>
 
         <!-- Четвёртый блок стиля -->
-        <section class="style-block">
+        <section class="style-block" data-hint="nb lite 2">
             <!-- Картинка стиля (кликабельна) -->
             <div class="style-image" role="button" tabindex="0" title="нажми, чтобы раскрыть">
-                <img src="img-source/iig_2026-07-16T21-12-43-912Z.jpg" alt="стиль">
+                <img src="img-source/4style.jpeg" alt="стиль">
                 <button class="expand-btn" type="button" title="на весь экран">⤢</button>
             </div>
 
@@ -118,11 +117,10 @@
             <button class="modal-close" type="button" title="закрыть">✕</button>
             <div class="modal-image-wrap">
                 <img class="modal-image" src="" alt="стиль">
+                <span class="modal-hint"></span>
             </div>
-            <div class="modal-text-wrap">
-                <textarea class="style-text modal-text" rows="5" readonly></textarea>
-                <button class="btn copy-btn modal-copy" type="button">копировать</button>
-            </div>
+            <!-- Текстовые плашки заполняются динамически из блока стиля -->
+            <div class="modal-text-wrap"></div>
         </div>
     </div>
 
@@ -144,8 +142,8 @@
             });
         });
 
-        // Копирование текста из textarea прямо над кнопкой
-        document.querySelectorAll('.copy-btn').forEach(function (btn) {
+        // Обработчик копирования текста из textarea над кнопкой
+        function attachCopyHandler(btn) {
             btn.addEventListener('click', function () {
                 const text = btn.previousElementSibling.value;
 
@@ -159,22 +157,55 @@
                     }, 1500);
                 });
             });
-        });
+        }
+
+        // Копирование для всех кнопок на странице
+        document.querySelectorAll('.copy-btn').forEach(attachCopyHandler);
 
         // Модальное окно: стиль на весь экран
         const modal = document.getElementById('styleModal');
         const modalImage = modal.querySelector('.modal-image');
-        const modalText = modal.querySelector('.modal-text');
+        const modalHint = modal.querySelector('.modal-hint');
+        const modalTextWrap = modal.querySelector('.modal-text-wrap');
         const styleBlocks = Array.from(document.querySelectorAll('.style-block'));
         let currentIndex = -1;
 
+        // Собирает текстовые плашки (подпись + поле + кнопка) из блока стиля
+        function buildModalTexts(block, container) {
+            container.innerHTML = '';
+
+            block.querySelectorAll('.style-text').forEach(function (text) {
+                // Подпись берём из ближайшего label перед полем
+                const label = text.previousElementSibling;
+                if (label && label.classList.contains('style-label')) {
+                    const labelEl = document.createElement('span');
+                    labelEl.className = 'style-label';
+                    labelEl.textContent = label.textContent;
+                    container.appendChild(labelEl);
+                }
+
+                const textarea = document.createElement('textarea');
+                textarea.className = 'style-text modal-text';
+                textarea.rows = 4;
+                textarea.readOnly = true;
+                textarea.value = text.value;
+                container.appendChild(textarea);
+
+                const copyBtn = document.createElement('button');
+                copyBtn.className = 'btn copy-btn modal-copy';
+                copyBtn.type = 'button';
+                copyBtn.textContent = 'копировать';
+                attachCopyHandler(copyBtn);
+                container.appendChild(copyBtn);
+            });
+        }
+
         function showInModal(block) {
             const img = block.querySelector('.style-image img');
-            // Берём первый textarea блока (основной промпт)
-            const text = block.querySelector('.style-text');
 
             modalImage.src = img.src;
-            modalText.value = text ? text.value : '';
+            modalHint.textContent = block.dataset.hint || '';
+            buildModalTexts(block, modalTextWrap);
             currentIndex = styleBlocks.indexOf(block);
         }
 

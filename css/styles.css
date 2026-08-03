@@ -1,9 +1,138 @@
-/* Стили страницы стилей (styles.html) */
+/* ============================================
+   Стили страницы стилей (styles.html)
+   Полный файл: база + специфика страницы
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Kurale&display=swap');
+
+/* Локальные шрифты */
+@font-face {
+    font-family: 'Norse';
+    src: url('../fonts/Norse-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Norse';
+    src: url('../fonts/Norse-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #0d1117;
+    color: #c9d1d9;
+    font-family: 'EB Garamond', serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 16px;
+    opacity: 1;
+    transition: opacity 0.25s ease-in-out;
+    animation: page-fade-in 0.3s ease-out;
+}
+
+/* Скроллбар не появляется, если контент не превышает вьюпорт */
+html {
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+}
+
+/* Плавное появление страницы при загрузке */
+@keyframes page-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Плавный уход страницы при переходе по вкладке */
+body.page-leave {
+    opacity: 0;
+}
+
+/* Навигация сверху */
+.nav-menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+    max-width: 900px;
+    margin-bottom: 50px;
+}
+
+/* Кнопки */
+.btn {
+    background-color: #161b22;
+    border: 1px solid #30363d;
+    color: #f0f6fc;
+    padding: 8px 16px;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: inherit;
+}
+
+.btn:hover {
+    background-color: #21262d;
+    border-color: #8b949e;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Кнопки навигации — шрифт Norse Bold, крупнее */
+.nav-menu .btn {
+    font-family: 'Norse', serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    padding: 12px 24px;
+    border-radius: 10px;
+}
+
+.content {
+    text-align: center;
+    max-width: 800px;
+    width: 100%;
+}
+
+.profile-title {
+    font-size: 2.5rem;
+    color: #f0f6fc;
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+}
+
+.profile-subtitle {
+    font-size: 1rem;
+    color: #8b949e;
+    line-height: 1.4;
+}
+
+/* ============ Специфика страницы стилей ============ */
 
 /* Контент страницы — счётчик для нумерации стилей, шире для ряда блоков */
 .content {
     counter-reset: style-num;
-    max-width: 1400px;
+    max-width: 1600px;
 }
 
 /* Горизонтальный ряд блоков стилей (по два в строке, по центру) */
@@ -27,9 +156,9 @@
     border-radius: 12px;
     padding: 16px;
     margin: 0;
-    max-width: 560px;
+    max-width: 400px;
     width: 100%;
-    flex: 0 1 calc(50% - 12px); /* два блока в строке с учётом gap */
+    flex: 0 1 calc(25% - 18px); /* четыре блока в строке с учётом gap */
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -55,10 +184,10 @@
     pointer-events: none;
 }
 
-/* Картинка стиля (кликабельна) */
+/* Картинка стиля (кликабельна), вертикальный формат 3:4 */
 .style-image {
     width: 100%;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 3 / 4;
     background-color: #0d1117;
     border: 1px solid #30363d;
     border-radius: 8px;
@@ -204,11 +333,32 @@
 }
 
 .modal-image-wrap {
+    position: relative;
     width: 100%;
     border-radius: 10px;
     overflow: hidden;
     background-color: #0d1117;
     border: 1px solid #30363d;
+}
+
+/* Полупрозрачная светящаяся подсказка поверх картинки в модалке */
+.modal-hint {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    padding: 6px 14px;
+    font-family: 'Norse', serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(240, 246, 252, 0.55);
+    text-shadow:
+        0 0 8px rgba(240, 246, 252, 0.6),
+        0 0 18px rgba(139, 148, 158, 0.5),
+        0 0 32px rgba(139, 148, 158, 0.35);
+    pointer-events: none;
+    z-index: 2;
 }
 
 .modal-image {
